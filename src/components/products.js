@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 const Products = props => {
-  const [spacing, setSpacing] = React.useState(2);
+  const [spacing] = React.useState(2);
   const classes = useStyles();
   let active = props.categoryReducer.activeCat;
   let products = props.productReducer.products;
