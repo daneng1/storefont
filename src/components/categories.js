@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { selectCat, reset } from '../store/categories.js';
+import { selectCat, getRemoteCategory, putRemoteCategory, resetRemoteCategory } from '../store/categories.js';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+// import Typography from '@material-ui/core/Typography';
+// import Box from '@material-ui/core/Box';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,6 +62,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Categories = props => {
+
+  const fetchData = (e) => {
+    e && e.preventDefault();
+    props.get();
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
+  
+  const resetData = (e) => {
+    e && e.preventDefault();
+    props.reset();
+  }
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -77,8 +91,8 @@ const Categories = props => {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label='HOME'  onClick={() => props.reset()} key='all' {...a11yProps(0)} />
-          {props.categoryReducer.categories.map(cat => { return <LinkTab label={cat.displayName}  onClick={() => props.selectCat(cat.name)} key={cat.name} {...a11yProps(1)} />
+          <LinkTab label='HOME'  onClick={() => resetData()} key='all' {...a11yProps(0)} />
+          {props.data().map(cat => { return <LinkTab label={cat.displayName}  onClick={() => props.selectCat(cat.name)} key={cat._id} {...a11yProps(1)} />
         })}
         </Tabs>
       </AppBar>
@@ -88,12 +102,14 @@ const Categories = props => {
 
 
 const mapStateToProps = state => ({
-  categoryReducer: state.categoryReducer
+  selectCat : state.selectCat
 })
 
 const mapDispatchToProps = dispatch => ({
   selectCat: (name) => dispatch(selectCat(name)),
-  reset: () => dispatch(reset())
+  get: () => dispatch(getRemoteCategory()),
+  put: () => dispatch(putRemoteCategory()),
+  reset: () => dispatch(resetRemoteCategory())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

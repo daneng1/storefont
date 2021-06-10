@@ -36,7 +36,7 @@ const Cart = props => {
               <h5>{item.name}</h5>
               <p>{item.price}</p>
               <p>{item.description}</p>
-              <IconButton aria-label="delete" onClick={props.deleteItem}>
+              <IconButton aria-label="delete" onClick={() => props.deleteItem(item)}>
                 <DeleteIcon />
               </IconButton>
 

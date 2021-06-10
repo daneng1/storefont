@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { activeProd } from '../store/products.js';
+import { activeProd, getRemoteData, putRemoteData } from '../store/products.js';
 import { addItem } from '../store/cart.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -34,11 +34,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 const Products = props => {
-  // const [spacing] = React.useState(2);
+
+  const fetchData = (e) => {
+    e && e.preventDefault();
+    props.get();
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
+
   const classes = useStyles();
   let active = props.categoryReducer.activeCat;
-  let products = props.productReducer.products;
+  // let products = props.productReducer;
 
   return (
     <div className='product-list'>
@@ -47,7 +56,7 @@ const Products = props => {
         <Container maxWidth="sm">
           {active !== null ? (
             <div>
-              {products.filter((item) => item.category === active && item.inventory > 0).map((item) => {
+              {fetchData.filter((item) => item.category === active && item.inventory > 0).map((item) => {
                 return (
                   <section key={item.name}>
                     <Card className={classes.root} >
@@ -96,7 +105,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   activeProd: () => dispatch(activeProd()),
-  addItem: (item) => dispatch(addItem(item))
+  addItem: (item) => dispatch(addItem(item)),
+  get: () => dispatch(getRemoteData()),
+  put: () => dispatch(putRemoteData())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

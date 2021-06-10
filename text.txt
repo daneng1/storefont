@@ -1,0 +1,66 @@
+let initialState = [
+  {
+    category: "patio",
+    name: "Teak Table",
+    description: "Handmade Teak Table",
+    price: "$3665.99",
+    image: "https://akamai-scene7.ballarddesigns.com/is/image/ballarddesigns/T_WithoutZoom?$w400$&$src=ballarddesigns/JC085_alt2&$B1=blank",
+    inventory: 35
+  },
+  {
+    category: "patio",
+    name: "Teak Chair",
+    description: "Handmade Teak Chair",
+    price: "$629.99",
+    image: "https://akamai-scene7.ballarddesigns.com/is/image/ballarddesigns/T_WithoutZoom?$w400$&$src=ballarddesigns/JC055_alt1",
+    inventory: 160,
+  },
+  {
+    category: "patio",
+    name: "Outdoor Rug",
+    description: "Washable Outdoor Rug",
+    price: "$565.99",
+    image: "https://akamai-scene7.ballarddesigns.com/is/image/ballarddesigns/T_WithoutZoom?$w400$&$src=ballarddesigns/RW203_main&$B1=blank&$B3=blank",
+    inventory: 10
+  },
+  {
+    category: "kitchen",
+    name: "Blender",
+    description: "Handcrafted Blender with 12 speeds",
+    price: "$665.99",
+    image: "https://cb.scene7.com/is/image/Crate/VitamixExplorianSrE310BlndSHF17/$web_pdp_main_carousel_med$/190411135544/vitamix-explorian-e310-blender.jpg",
+    inventory: 55
+  },
+  {
+    category: "kitchen",
+    name: "Toaster",
+    description: "Handcrafted Toaster with Bagel Slot",
+    price: "$165.99",
+    image: "https://cb.scene7.com/is/image/Crate/HadenDrchstrToasterSageSSF20/$web_pdp_main_carousel_med$/200825104253/haden-dorchester-toaster-sage.jpg",
+    inventory: 35,
+  },
+  {
+    category: "kitchen",
+    name: "Handspun Ceramic Dinnerware",
+    description: "Handcrafted Dinnerware Set of 12",
+    price: "$1565.99",
+    image: "https://cb.scene7.com/is/image/Crate/OraStonewareDnnrwr16pcSetSHS19/$web_pdp_main_carousel_med$/190411135312/ora-stoneware-dinnerware-16pc-set.jpg",
+    inventory: 5
+  },
+  {
+    category: "games",
+    name: "Exploding Kittens",
+    description: "Exciting game with Kitten Guts",
+    price: "$65.99",
+    image: "https://cdn.shopify.com/s/files/1/0345/9180/1483/products/EK_Party-Pack-Hero_78d5b17a-f91d-4040-acac-fdacec3e9a5a_x380@2x.png?v=1616615790",
+    inventory: 155
+  },
+  {
+    category: "games",
+    name: "Bocceball Set",
+    description: "Handcrafted Bocceball set",
+    price: "$365.99",
+    image: "https://cb.scene7.com/is/image/Crate/BocceBallSetAVROS17/$web_pdp_main_carousel_med$/190411134836/bocce-ball-set.jpg",
+    inventory: 155
+  }
+]

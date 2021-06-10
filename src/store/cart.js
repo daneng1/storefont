@@ -7,12 +7,14 @@ export default function cartReducer (state = initialState, action) {
   let { type, payload } = action;
 
   switch(type) {
-    case 'ADD':
+    case 'ADD_TO_CART':
       return {items:[...state.items, payload], cartCount: state.cartCount + 1};
     
-    case 'REMOVE':
-      console.log(payload);
-      return {items: [...state.items.slice(payload)], cartCount: state.cartCount -1};
+    case 'REMOVE_FROM_CART':
+      let index = state.items.indexOf(payload);
+      console.log(index);
+      let newItems = state.items.filter(item => item !== payload)
+      return {items: newItems, cartCount: state.cartCount -1};
       
     case 'RESET_CART':
       return initialState;
@@ -24,14 +26,14 @@ export default function cartReducer (state = initialState, action) {
 
 export const addItem = (name) => {
   return {
-    type: 'ADD',
+    type: 'ADD_TO_CART',
     payload: name
   }
 }
 
 export const deleteItem = (item) => {
   return {
-    type: 'REMOVE',
+    type: 'REMOVE_FROM_CART',
     payload: item
   }
 }
