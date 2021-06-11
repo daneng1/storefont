@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { activeProd, getRemoteData, putRemoteData } from '../store/products.js';
+import { getRemoteData } from '../store/products.js';
 import { addItem } from '../store/cart.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -37,17 +37,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = props => {
 
-  const fetchData = (e) => {
-    e && e.preventDefault();
-    props.get();
-  }
   useEffect(() => {
-    fetchData();
-  }, [])
+    console.log('useEffect');
+    props.get();
+  },[] )
+  
 
   const classes = useStyles();
-  let active = props.categoryReducer.activeCat;
+  let active = props.categoryReducer.active;
   // let products = props.productReducer;
+  console.log(active)
 
   return (
     <div className='product-list'>
@@ -56,7 +55,7 @@ const Products = props => {
         <Container maxWidth="sm">
           {active !== null ? (
             <div>
-              {fetchData.filter((item) => item.category === active && item.inventory > 0).map((item) => {
+              {props.data.filter((item) => item.category === active && item.inventory > 0).map((item) => {
                 return (
                   <section key={item.name}>
                     <Card className={classes.root} >
@@ -100,14 +99,14 @@ const Products = props => {
 const mapStateToProps = state => ({
   categoryReducer: state.categoryReducer,
   productReducer: state.productReducer,
-  cartReducer: state.cartReducer
+  cartReducer: state.cartReducer,
+  filteredData: state.productReducer.filteredList,
+  data: state.productReducer.list
 })
 
 const mapDispatchToProps = dispatch => ({
-  activeProd: () => dispatch(activeProd()),
   addItem: (item) => dispatch(addItem(item)),
-  get: () => dispatch(getRemoteData()),
-  put: () => dispatch(putRemoteData())
+  get: () => dispatch(getRemoteData())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

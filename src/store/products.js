@@ -1,60 +1,43 @@
 import superagent from "superagent";
 
-let list = [];
+let initialState= {
+  list: [],
+  filteredList: []
+}
 
 let api = 'https://danengel-api-server.herokuapp.com/product';
 
-export default function productReducer(state = list, action) {
+export default function productReducer(state = initialState, action) {
   let { type, payload } = action;
 
   switch (type) {
 
     case 'GET':
-      return payload;
+      return {...state, list: payload};
   
     case 'ACTIVE_CATEGORY':
-      let items = state.map((item) => {
-        let displayItems = Object.assign({}, item);
-        if (item.category === payload) {
-          displayItems.active = true;
-          return displayItems;
-        } else {
-          displayItems.active = false;
-          return displayItems;
-        }
-      });
-      console.log(state)
-      return items;
+      if (payload) {
+        return { ...state, filteredList: [...state.products.filter(product => product.category === payload)] }
+    }
+
+    return { ...state, filteredList: [...state.list] };
+
 
     case 'ADD_TO_CART':
-      return state.map((item) => {
-        if (item.name === payload.name) {
-          return {
-            category: item.category,
-            name: item.name,
-            description: item.description,
-            price: item.price,
-            image: item.img,
-            inventory: item.inventory - 1,
-          };
-        }
-        return item;
-      });
+      return {...state, list: [...state.list.map(item => {
+          if (item._id === payload._id) {
+             item.inventory = item.inventory - 1}
+             return item;
+        })]
+    }
 
     case 'REMOVE_FROM_CART':
-      return state.map((item) => {
-        if (item.name === payload.name) {
-          return {
-            category: item.category,
-            name: item.name,
-            description: item.description,
-            price: item.price,
-            image: item.img,
-            inventory: item.inventory - 1,
-          };
-        }
-        return item;
-      });
+      return {...state, list: [...state.list.map(item => {
+        if (item._id === payload._id) {
+           item.inventory = item.inventory + 1}
+           return item;
+      })]
+  }
 
     case 'RESET':
       return state;
@@ -72,6 +55,7 @@ export const activeProd = (category) => {
 };
 
 export const addItem = (item) => {
+  console.log('inside products',item);
   return {
     type: 'ADD_TO_CART',
     payload: item,
@@ -93,25 +77,25 @@ export const getAction = data => {
 }
 
 export const getRemoteData = () => dispatch => {
+  console.log('data');
   return superagent.get(api)
   .then(response => {
-    console.log('data', response.body);
     dispatch(getAction(response.body))
   })
 }
 
-export const putRemoteData = (data) => dispatch => {
-  return superagent.put(`${api}/${data._id}`).send(data)
-    .then(response => {
-      console.log(response.body);
-      dispatch(addItem(response.body))
-    }) 
-}
+// export const putRemoteData = (data) => dispatch => {
+//   return superagent.put(`${api}/${data._id}`).send(data)
+//     .then(response => {
+//       console.log(response.body);
+//       dispatch(addItem(response.body))
+//     }) 
+// }
 
-export const removeRemoteData = (data) => dispatch => {
-  return superagent.put(`${api}/${data._id}`).send(data)
-    .then(response => {
-      console.log(response.body);
-      dispatch(deleteItem(response.body))
-    }) 
-}
+// export const removeRemoteData = (data) => dispatch => {
+//   return superagent.put(`${api}/${data._id}`).send(data)
+//     .then(response => {
+//       console.log('data', response.body);
+//       dispatch(deleteItem(response.body))
+//     }) 
+// }

@@ -1,6 +1,9 @@
 import superagent from 'superagent';
 
-let list = [];
+let list = {
+  categories: [],
+  active: 'all',
+};
 
 const api = 'https://danengel-api-server.herokuapp.com/category';
 
@@ -9,19 +12,13 @@ export default function categoryReducer (state = list, action) {
 
   switch(type) {
     case 'SELECT_CATEGORY':
-      let activeCat = state.map((cat) => {
-        if (cat.name === payload) {
-          return {...cat, active: true};
-        } else {
-          return {...cat, active: false}
-        }
-      });
-        return activeCat;
+      return { categories: state.categories, active: payload}
 
     case 'RESET':
-      return state.map((cat) => {
-        return {...cat, active:false}
-      });
+      return { categories: state.categories, active: 'all'}
+
+    case 'GET_CAT':
+      return { categories: payload, active: state.active}
 
     default:
       return state;  
@@ -29,6 +26,7 @@ export default function categoryReducer (state = list, action) {
 }
 
 export const selectCat = (name) => {
+  console.log(name);
   return {
     type: 'SELECT_CATEGORY',
     payload: name
@@ -43,7 +41,7 @@ export const reset = () => {
 
 export const getCategory = data => {
   return {
-    type: 'GET',
+    type: 'GET_CAT',
     payload: data
   }
 }
@@ -53,21 +51,5 @@ export const getRemoteCategory = () => dispatch => {
   .then(response => {
     console.log('data', response.body);
     dispatch(getCategory(response.body))
-  })
-}
-
-export const putRemoteCategory = (data) => dispatch => {
-  return superagent.put(`${api/data._id}`).send(data)
-  .then(response => {
-    console.log('data', response.body);
-    dispatch(selectCat(response.body))
-  })
-}
-
-export const resetRemoteCategory = (data) => dispatch => {
-  return superagent.put(`${api/data._id}`).send(data)
-  .then(response => {
-    console.log('data', response.body);
-    dispatch(reset(response.body))
   })
 }

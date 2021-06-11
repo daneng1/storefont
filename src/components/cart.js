@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const Cart = props => {
   const classes = useStyles();
   let products = props.cartReducer;
-  // console.log(products.cartCount);
+  console.log(products.cartCount);
   return (
     <div className='cart-section'>
       <section >
@@ -29,14 +29,14 @@ const Cart = props => {
 
       </section>
       <section>
-        {products.items.map(item => {
+        {products.items.map((item, idx) => {
           // console.log(item);
           return (
-            <section className='cart-item'>
+            <section key={idx} className='cart-item'>
               <h5>{item.name}</h5>
               <p>{item.price}</p>
               <p>{item.description}</p>
-              <IconButton aria-label="delete" onClick={() => props.deleteItem(item)}>
+              <IconButton aria-label="delete" onClick={() => props.deleteItem(item, idx)}>
                 <DeleteIcon />
               </IconButton>
 
