@@ -74,9 +74,13 @@ const Categories = props => {
     props.get();
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  function Data() {
+    useEffect(() => {
+      fetchData();
+    }, []);
+  }
+
+  Data();
   
   const classes = useStyles();
   const [value, setValue] = React.useState(0);

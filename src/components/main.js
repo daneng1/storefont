@@ -18,12 +18,14 @@ function Main(props) {
     props.getRemoteData();
     props.getRemoteCategory();
   };
+  function Data () {
+    useEffect(() => {
+      fetchData();
+    }, []);
 
-  useEffect(() => {
-    console.log('inside fetch')
-    fetchData();
-  }, []);
-
+  }
+  Data();
+  
   return (
     <>
       <Header />
