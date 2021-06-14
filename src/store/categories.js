@@ -1,22 +1,24 @@
-let initialState = {
-  categories: [
-    {name: 'games', displayName: 'Games', description: 'Board games, lawn games and table games'},
-    {name: 'kitchen', displayName: 'Kitchen', description: 'Small appliances, tableware and cookware'},
-    {name: 'patio', displayName: 'Patio and Outdoor', description: 'Patio Furniture and '}
-  ],
-  activeCat: null,
-}
+import superagent from 'superagent';
 
-export default function categoryReducer (state = initialState, action) {
+let list = {
+  categories: [],
+  active: 'all',
+};
+
+const api = 'https://danengel-api-server.herokuapp.com/category';
+
+export default function categoryReducer (state = list, action) {
   let { type, payload } = action;
 
   switch(type) {
     case 'SELECT_CATEGORY':
-      let activeCat = payload;
-        return { ...state, activeCat };
+      return { categories: state.categories, active: payload}
 
     case 'RESET':
-      return initialState;
+      return { categories: state.categories, active: 'all'}
+
+    case 'GET_CAT':
+      return { categories: payload, active: state.active}
 
     default:
       return state;  
@@ -24,6 +26,7 @@ export default function categoryReducer (state = initialState, action) {
 }
 
 export const selectCat = (name) => {
+  console.log(name);
   return {
     type: 'SELECT_CATEGORY',
     payload: name
@@ -34,4 +37,19 @@ export const reset = () => {
   return {
     type: "RESET"
   }
+}
+
+export const getCategory = data => {
+  return {
+    type: 'GET_CAT',
+    payload: data
+  }
+}
+
+export const getRemoteCategory = () => dispatch => {
+  return superagent.get(api)
+  .then(response => {
+    console.log('data', response.body);
+    dispatch(getCategory(response.body))
+  })
 }

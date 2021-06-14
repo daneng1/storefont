@@ -5,17 +5,23 @@
   height: 50px;
   position: fixed;
   right: 0px;
-  top: 10px;
+  top: 30px;
   background-color: rgb(240, 240, 2);
   transition: 350ms all;
   border-radius: 3px 0 0px 3px;
   overflow: hidden;
 }
 
+// .item-section{
+  
+// }
 .cart-section:hover {
-  width: 350px;
-  height: 500px;
   overflow: scroll;
+  width: 125px;
+  height: 550px;
+  background-color: rgb(240, 240, 2);
+  box-shadow: -5px 0px 15px rgba(2, 2, 2, 0.22);
+  align-items: center;
 }
 .cart-icon {
   margin-top: 15px;
@@ -34,6 +40,7 @@
   left: 25px;
 }
 .cart-item {
+  font-family: 'Roboto', sans-serif;
   background-color: white;
   border-radius: 5px;
   margin: 10px;
@@ -58,4 +65,9 @@
 }
 .delete-btn:onClick {
     background-color: red;
+}
+
+img{
+  width: 75px;
+  height: 75px;
 }

@@ -10,6 +10,11 @@
 
 > In phase 2, we will be adding the “Add to Cart” feature to our application, which will allow our users to not only browse items in the store, but also select them and have them persist in their “shopping cart” for later purchase.
 
+## USer Stories
+
+- As a user, I want to see a full detail view of a product so that I can make a more informed choice about purchasing it.
+- As a user, I want to view my full cart and initiate the checkout process so that I can purchase my items and have them delivered
+
 ## Technical Requirements
 
 - Categories
