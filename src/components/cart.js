@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { deleteItem, resetCart } from '../store/cart.js';
 import './style/cart.scss';
 import cart from './assets/cart.png';
@@ -16,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = props => {
+
   const classes = useStyles();
   let products = props.cartReducer;
-  console.log(products.cartCount);
+
   return (
+    <div>
     <div className='cart-section'>
       <section >
         {products.cartCount > 0 ?
@@ -28,11 +31,11 @@ const Cart = props => {
         <img className='cart-icon' src={cart} alt='cart' />
 
       </section>
-      <section>
+      <section className='item-section'>
         {products.items.map((item, idx) => {
-          // console.log(item);
           return (
             <section key={idx} className='cart-item'>
+              <img src={item.image} alt={item.name}></img>
               <h5>{item.name}</h5>
               <p>{item.price}</p>
               <p>{item.description}</p>
@@ -44,7 +47,13 @@ const Cart = props => {
           )
         })}
         <Button onClick={props.resetCart} className={classes.button} variant='contained' size="small" color="primary">Reset Cart</Button>
+        <Link
+          to='/checkout'
+          style={{ textDecoration: "none"}}>
+        <Button className={classes.button} variant='contained' size="small" color="primary">Checkout</Button>
+        </Link>
       </section>
+    </div>
     </div>
   )
 }

@@ -2,7 +2,8 @@ import superagent from "superagent";
 
 let initialState= {
   list: [],
-  filteredList: []
+  filteredList: [],
+  activeItem: null
 }
 
 let api = 'https://danengel-api-server.herokuapp.com/product';
@@ -14,14 +15,6 @@ export default function productReducer(state = initialState, action) {
 
     case 'GET':
       return {...state, list: payload};
-  
-    case 'ACTIVE_CATEGORY':
-      if (payload) {
-        return { ...state, filteredList: [...state.products.filter(product => product.category === payload)] }
-    }
-
-    return { ...state, filteredList: [...state.list] };
-
 
     case 'ADD_TO_CART':
       return {...state, list: [...state.list.map(item => {
@@ -37,7 +30,12 @@ export default function productReducer(state = initialState, action) {
            item.inventory = item.inventory + 1}
            return item;
       })]
-  }
+    }
+    case 'SET_ACTIVE_ITEM':
+      return {...state, activeItem: [payload] };
+
+    case 'RESET_ACTIVE_ITEM':
+      return {...state, activeItem: null }
 
     case 'RESET':
       return state;
@@ -55,7 +53,6 @@ export const activeProd = (category) => {
 };
 
 export const addItem = (item) => {
-  console.log('inside products',item);
   return {
     type: 'ADD_TO_CART',
     payload: item,
@@ -76,26 +73,23 @@ export const getAction = data => {
   }
 }
 
+export const productDetailPage = data => {
+  return {
+    type:'SET_ACTIVE_ITEM',
+    payload: data
+  }
+}
+
+export const removeActiveItem = data => {
+  return {
+    type:'RESET_ACTIVE_ITEM',
+    payload: data
+  }
+}
+
 export const getRemoteData = () => dispatch => {
-  console.log('data');
   return superagent.get(api)
   .then(response => {
     dispatch(getAction(response.body))
   })
 }
-
-// export const putRemoteData = (data) => dispatch => {
-//   return superagent.put(`${api}/${data._id}`).send(data)
-//     .then(response => {
-//       console.log(response.body);
-//       dispatch(addItem(response.body))
-//     }) 
-// }
-
-// export const removeRemoteData = (data) => dispatch => {
-//   return superagent.put(`${api}/${data._id}`).send(data)
-//     .then(response => {
-//       console.log('data', response.body);
-//       dispatch(deleteItem(response.body))
-//     }) 
-// }

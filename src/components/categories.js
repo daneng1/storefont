@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { selectCat,reset, getRemoteCategory } from '../store/categories.js';
+import { removeActiveItem } from '../store/products.js';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
+import './style/reset.css';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +49,7 @@ function LinkTab(props) {
       }}
       {...props}
     />
+
   );
 }
 
@@ -57,8 +60,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const Categories = props => {
   
+  const setCat = (data) => {
+    props.selectCat(data);
+    props.resetActive();
+    
+  }
+
   const fetchData = (e) => {
     e && e.preventDefault();
     props.get();
@@ -68,7 +78,6 @@ const Categories = props => {
     fetchData();
   }, []);
   
-  console.log('props.data', props.data[0]);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -84,9 +93,10 @@ const Categories = props => {
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label='HOME'  onClick={() => props.reset()} key='all' {...a11yProps(0)} />
-          {props.data.map((cat) => { return <LinkTab label={cat.name}  onClick={(e) => props.selectCat(cat.name)} key={cat._id} {...a11yProps(1)} />
+          <LinkTab label='HOME' onClick={(e) => {props.reset(); e.preventDefault()}} key='all' {...a11yProps(0)} />
+          {props.data.map((cat) => { return <LinkTab label={cat.name} onClick={(e) => setCat(cat.name)} key={cat._id} {...a11yProps(1)} />
         })}
+        
         </Tabs>
       </AppBar>
     </div>
@@ -99,6 +109,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectCat: (name) => dispatch(selectCat(name)),
+  resetActive: () => dispatch(removeActiveItem()),
   reset: () => dispatch(reset()),
   get: () => dispatch(getRemoteCategory()),
 });
