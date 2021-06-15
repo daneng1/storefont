@@ -10,9 +10,19 @@
   // border: yellow solid 5px;
   color: white;
   
+  ul {
+    display: inline-flex;
+    margin-left: 50px;
+  }
+
   li{
     font-family: 'Roboto', sans-serif;
-    margin: 20px 20px 20px 50px;
+    margin: 20px 10px 20px 10px;
     // margin-left: 50px;
+  }
+  img {
+    width: 30px;
+    height: 30px;
+    margin-top: -5px;
   }
 }

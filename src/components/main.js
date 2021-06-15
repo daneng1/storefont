@@ -10,6 +10,7 @@ import Cart from './cart.js';
 import ProductDetails from './product-detail.js';
 import { getRemoteCategory } from '../store/categories.js';
 import { getRemoteData } from '../store/products.js';
+import LearnMore from './learnMore.js';
 import './style/app.scss';
 
 function Main(props) {
@@ -34,6 +35,13 @@ function Main(props) {
         <Route exact path="/">
           <Categories />
           <Products />
+          {props.activeCat === 'all' ? 
+          <>
+            <img className='landing-image' src='https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80' alt='couple in kitchen'/> 
+            <LearnMore />
+          </>
+          : null
+          }
         </Route>
         {props.activeItem !== null ?
           <Route exact path={`/details`}
@@ -53,7 +61,8 @@ function Main(props) {
   )
 }
 const mapStateToProps = state => ({
-  activeItem: state.productReducer.activeItem
+  activeItem: state.productReducer.activeItem,
+  activeCat: state.categoryReducer.active
 })
 
 const mapDispatchToProps = dispatch => ({
