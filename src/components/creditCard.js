@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   container: {
-    marginBottom: '200px',
+    marginBottom: '100px',
   },
   button: {
     width: '150px',
@@ -31,30 +31,30 @@ export default function CreditCard() {
 
   return (
     <section>
-    {orderSubmitted ? <Modal innerText="Thanks for you order! You should receive an email notification shortly that confirms your order was received!"></Modal>
-    : null }
-    <Container className={classes.container}>
-      <form className={classes.root} Validate autoComplete="on">
-      <h1>Billing Info</h1>
-      <TextField id="filled-basic" label="Name" variant="filled"/>
-      <TextField id="filled-basic" label="Address" variant="filled"/>
-      <TextField id="filled-basic" label="City" variant="filled"/>
-      <TextField id="filled-basic" label="State" variant="filled"/>
-      <TextField id="filled-basic" label="Zip" variant="filled"/>
-      <TextField id="filled-basic" label="Phone" variant="filled"/>
-      </form >
-      <form className={classes.root} Validate autoComplete="on">
-      <h1>Payment Info</h1>
-      <TextField id="filled-basic" label="Credit Card Number" variant="filled"/>
-      <TextField id="filled-basic" type='date' InputLabelProps={{
+      {orderSubmitted ? <Modal innerText="Thanks for you order! You should receive an email notification shortly that confirms your order was received!"></Modal>
+        : null}
+      <Container className={classes.container}>
+        <form className={classes.root} Validate autoComplete="on">
+          <h1>Billing Info</h1>
+          <TextField id="filled-basic" label="Name" variant="filled" />
+          <TextField id="filled-basic" label="Address" variant="filled" />
+          <TextField id="filled-basic" label="City" variant="filled" />
+          <TextField id="filled-basic" label="State" variant="filled" />
+          <TextField id="filled-basic" label="Zip" variant="filled" />
+          <TextField id="filled-basic" label="Phone" variant="filled" />
+        </form >
+        <form className={classes.root} Validate autoComplete="on">
+          <h1>Payment Info</h1>
+          <TextField id="filled-basic" label="Credit Card Number" variant="filled" />
+          <TextField id="filled-basic" type='date' InputLabelProps={{
             shrink: true,
-          }}label="Expiration Date" variant="filled"/>
-      <TextField id="filled-basic" label="CCV" variant="filled"/>
+          }} label="Expiration Date" variant="filled" />
+          <TextField id="filled-basic" label="CCV" variant="filled" />
 
-      </form>
-      <Button  className={classes.button} onClick={toggleSubmit}variant="contained"  color="primary">Place Order</Button>
+        </form>
+        <Button className={classes.button} onClick={toggleSubmit} variant="contained" color="primary">Place Order</Button>
 
-    </Container>
+      </Container>
     </section>
   )
 

@@ -3,3 +3,12 @@
   width: 100vw;
   height: 100vh;
 }
+
+.landing-image {
+  width: 100vw;
+  height: 80vw;
+  margin-top: -170px;
+
+  object-fit: cover;
+  object-position: 20% 00px;
+}
